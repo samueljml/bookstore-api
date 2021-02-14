@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.samuel.bookstore.domain.Categoria;
 import com.samuel.bookstore.dtos.CategoriaDTO;
 import com.samuel.bookstore.repositories.CategoriaRepository;
-import com.samuel.bookstore.service.exceptions.DataIntegrityViolationException;
 import com.samuel.bookstore.service.exceptions.ObjectNotFoundException;
 
 @Service
