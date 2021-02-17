@@ -38,7 +38,7 @@ public class LivroService {
 	}
 	public void updateData (Livro newObj, Livro obj) {
 		newObj.setTitulo(obj.getTitulo());
-		newObj.setDescricao(obj.getDescricao());
+		newObj.setNomeAutor(obj.getNomeAutor());
 		newObj.setTexto(obj.getTexto());
 	}
 

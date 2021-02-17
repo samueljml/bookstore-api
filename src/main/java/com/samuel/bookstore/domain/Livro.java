@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,8 +22,17 @@ public class Livro implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	@NotEmpty (message = "O campo TITULO é requerido")
+	@Length (min = 3, max = 50, message = "O campo TITULO deve ter entre 3 e 50 caracteres")
 	private String titulo;
-	private String descricao;
+	
+	@NotEmpty (message = "O campo NOME DO AUTOR é requerido")
+	@Length (min = 3, max = 100, message = "O campo NOME DO AUTOR deve ter entre 3 e 100 caracteres")
+	private String nome_autor;
+	
+	@NotEmpty (message = "O campo TEXTO é requerido")
+	@Length (min = 3, max = 2000000, message = "O campo TEXTO deve ter entre 3 e 2.000.000 caracteres")
 	private String texto;
 
 	@JsonIgnore
@@ -32,11 +44,11 @@ public class Livro implements Serializable{
 		super();
 	}
 
-	public Livro(Integer id, String nome, String descricao, String texto, Categoria categoria) {
+	public Livro(Integer id, String titulo, String nome_autor, String texto, Categoria categoria) {
 		super();
 		this.id = id;
-		this.titulo = nome;
-		this.descricao = descricao;
+		this.titulo = titulo;
+		this.nome_autor = nome_autor;
 		this.texto = texto;
 		this.categoria = categoria;
 	}
@@ -57,12 +69,12 @@ public class Livro implements Serializable{
 		this.titulo = nome;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getNomeAutor() {
+		return nome_autor;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNomeAutor(String nome_autor) {
+		this.nome_autor = nome_autor;
 	}
 
 	public String getTexto() {
