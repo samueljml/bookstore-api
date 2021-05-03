@@ -20,37 +20,37 @@ public class LivroService {
 	@Autowired
 	private CategoriaService categoriaService;
 
-	public Livro findById(Integer id) {
-		Optional<Livro> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Livro.class.getName()));
+	public Livro findById(Integer livroId) {
+		Optional<Livro> livro = repository.findById(livroId);
+		return livro.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + livroId + ", Tipo: " + Livro.class.getName()));
 	}
 
-	public List<Livro> findAll(Integer id_cat) {
-		categoriaService.findById(id_cat);
-		return repository.findAllByCategoria(id_cat);
+	public List<Livro> findAll(Integer categoriaId) {
+		categoriaService.findById(categoriaId);
+		return repository.findAllByCategoria(categoriaId);
 	}
 
-	public Livro update(Integer id, Livro obj) {
-		Livro newObj = findById(id);
-		updateData(newObj, obj);
-		return repository.save(newObj);
+	public Livro update(Integer livroId, Livro livroAtualizado) {
+		Livro livro = findById(livroId);
+		updateData(livro, livroAtualizado);
+		return repository.save(livro);
 	}
-	public void updateData (Livro newObj, Livro obj) {
-		newObj.setTitulo(obj.getTitulo());
-		newObj.setNomeAutor(obj.getNomeAutor());
-		newObj.setTexto(obj.getTexto());
-	}
-
-	public Livro create(Integer id_cat, Livro obj) {
-		obj.setId(null);
-		Categoria cat = categoriaService.findById(id_cat);
-		obj.setCategoria(cat);
-		return repository.save(obj);
+	public void updateData (Livro livro, Livro livroAtualizado) {
+		livro.setTitulo(livroAtualizado.getTitulo());
+		livro.setNomeAutor(livroAtualizado.getNomeAutor());
+		livro.setTexto(livroAtualizado.getTexto());
 	}
 
-	public void delete(Integer id) {
-		Livro obj = findById(id);
-		repository.delete(obj);
+	public Livro create(Integer categoriaId, Livro livro) {
+		livro.setId(null);
+		Categoria categoria = categoriaService.findById(categoriaId);
+		livro.setCategoria(categoria);
+		return repository.save(livro);
+	}
+
+	public void delete(Integer livroId) {
+		Livro livro = findById(livroId);
+		repository.delete(livro);
 	}
 }

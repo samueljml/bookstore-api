@@ -15,34 +15,34 @@ import com.samuel.bookstore.service.exceptions.ObjectNotFoundException;
 public class CategoriaService {
 
 	@Autowired
-	private CategoriaRepository repository;
+	private CategoriaRepository categoriaRepo;
 
-	public Categoria findById(Integer id) {
-		Optional<Categoria> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! id: " + id + ", Tipo: " + Categoria.class.getName()));
+	public Categoria findById(Integer categoriaId) {
+		Optional<Categoria> categoria = categoriaRepo.findById(categoriaId);
+		return categoria.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! id: " + categoriaId + ", Tipo: " + Categoria.class.getName()));
 	}
 
 	public List<Categoria> findAll() {
-		return repository.findAll();
+		return categoriaRepo.findAll();
 	}
 
-	public Categoria create(Categoria obj) {
-		obj.setId(null);
-		return repository.save(obj);
+	public Categoria create(Categoria categoria) {
+		categoria.setId(null);
+		return categoriaRepo.save(categoria);
 	}
 
-	public Categoria update(Integer id, CategoriaDTO objDto) {
-		Categoria obj = findById(id);
-		obj.setNome(objDto.getNome());
-		obj.setDescricao(objDto.getDescricao());
-		return repository.save(obj);
+	public Categoria update(Integer categoriaId, CategoriaDTO categoriaDTO) {
+		Categoria categoria = findById(categoriaId);
+		categoria.setNome(categoriaDTO.getNome());
+		categoria.setDescricao(categoriaDTO.getDescricao());
+		return categoriaRepo.save(categoria);
 	}
 
-	public void delete(Integer id) {
-		findById(id);
+	public void delete(Integer categoriaId) {
+		findById(categoriaId);
 		try {
-			repository.deleteById(id);
+			categoriaRepo.deleteById(categoriaId);
 		} catch (org.springframework.dao.DataIntegrityViolationException e) {
 			throw new com.samuel.bookstore.service.exceptions.DataIntegrityViolationException(
 					"Categoria não pode ser deletada! Possui livros associados");

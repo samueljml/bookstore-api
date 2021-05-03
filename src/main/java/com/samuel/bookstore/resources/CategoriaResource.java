@@ -25,41 +25,41 @@ import com.samuel.bookstore.service.CategoriaService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping(value = "/categorias")
+@RequestMapping("/categorias")
 public class CategoriaResource {
 	
 	@Autowired
-	private CategoriaService service;
+	private CategoriaService categoriaService;
 	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<Categoria> findById(@PathVariable Integer id){
-		Categoria obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
+	@GetMapping("/{categoriaId}")
+	public ResponseEntity<Categoria> findById(@PathVariable Integer categoriaId){
+		Categoria categoria = categoriaService.findById(categoriaId);
+		return ResponseEntity.ok().body(categoria);
 	}
 	
 	@GetMapping
 	public ResponseEntity<List<CategoriaDTO>> findAll() {
-		List<Categoria> list = service.findAll();
-		List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		List<Categoria> lista = categoriaService.findAll();
+		List<CategoriaDTO> listDTO = lista.stream().map(categoria -> new CategoriaDTO(categoria)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria obj) {
-		obj = service.create(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+	public ResponseEntity<Categoria> create(@Valid @RequestBody Categoria categoria) {
+		categoria = categoriaService.create(categoria);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<CategoriaDTO> update(@Valid @PathVariable Integer id, @RequestBody CategoriaDTO objDto) {
-		Categoria newObj = service.update(id, objDto);
-		return ResponseEntity.ok().body(new CategoriaDTO(newObj));
+	@PutMapping("/{categoriaId}")
+	public ResponseEntity<CategoriaDTO> update(@Valid @PathVariable Integer categoriaId, @RequestBody CategoriaDTO categoriaDTO) {
+		Categoria categoria = categoriaService.update(categoriaId, categoriaDTO);
+		return ResponseEntity.ok().body(new CategoriaDTO(categoria));
 	}
 	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Integer id) {
-		service.delete(id);
+	@DeleteMapping("/{categoriaId}")
+	public ResponseEntity<Void> delete(@PathVariable Integer categoriaId) {
+		categoriaService.delete(categoriaId);
 		return ResponseEntity.noContent().build();
 	}
 }
