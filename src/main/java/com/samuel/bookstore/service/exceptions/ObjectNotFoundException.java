@@ -9,9 +9,7 @@ public class ObjectNotFoundException extends RuntimeException{
 		// TODO Auto-generated constructor stub
 	}
 
-	public ObjectNotFoundException(String message) {
-		super(message);
-		// TODO Auto-generated constructor stub
-	}		
-	
+	public ObjectNotFoundException(String nome, Integer id) {
+		super(nome + " com id=" + id + " não existe!");
+	}	
 }

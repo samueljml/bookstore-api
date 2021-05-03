@@ -22,8 +22,7 @@ public class LivroService {
 
 	public Livro findById(Integer livroId) {
 		Optional<Livro> livro = repository.findById(livroId);
-		return livro.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + livroId + ", Tipo: " + Livro.class.getName()));
+		return livro.orElseThrow(() -> new ObjectNotFoundException(Livro.class.getSimpleName(), livroId));
 	}
 
 	public List<Livro> findAll(Integer categoriaId) {
